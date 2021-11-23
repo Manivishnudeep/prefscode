@@ -1,0 +1,21 @@
+import java.util.Arrays;
+class Test{
+    int maxDiamonds(int boxes[]){
+        //Implement Your code here
+        int a=boxes.length;
+        int[] dp=new int[a];
+        Arrays.fill(dp,-1);
+        return maxsum(boxes,0,a,dp);
+    }
+    static int maxsum(int arr[], int i, int n,int dp[])
+    {
+        if (i >= n){
+            return 0;
+        }
+        if (dp[i]!=-1){
+            return dp[i];
+        }
+        dp[i] = Math.max(maxsum(arr, i + 1, n,dp),arr[i] + maxsum(arr, i + 2, n,dp));
+        return dp[i];
+    }
+}
