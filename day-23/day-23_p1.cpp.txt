@@ -1,0 +1,98 @@
+/*
+Mahesh checking his luck in diamonds.There are N boxes and each box has a number 
+of diamonds in it. box[i] is the number of diamonds in ith box(0-indexed).
+
+The boxes are arranged in cyclic fashion means box[N-1] is adjacent to box[0].
+
+Mahesh can select the boxes to get the diamonds. But there is a condition that
+he cannot choose the boxes which are adjacent.
+
+Help Mahesh to get maximum diamonds.
+
+Input Format:
+-------------
+Line-1: An Integer N represents number of boxes.
+Line-2: N space separated integers represents diamonds in each box.
+  
+Output Format:
+--------------
+Print an integer.
+
+Constraints:
+
+    1 <= N <= 100
+    0 <= box[i] <= 1000
+
+   
+ Sample Input-1:
+ ---------------
+4
+5 10 25 21
+  
+Sample Output-1:
+----------------
+31
+
+Explanation:
+------------
+He can select either 5+25 or 10+21.
+The maximum is 31.
+   
+Sample Input-2:
+---------------
+3
+20 30 40
+
+  
+ Sample Output-2:
+ ----------------
+40
+
+Explanation:
+------------
+Each box is adjacent to other 2 boxes. so he can choose only one box with maximum value which is 40.
+
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> dp;
+
+int maxSum(int i, vector<int>& subarr)
+{
+
+	if (i >= subarr.size())
+		return 0;
+
+	if (dp[i] != -1)
+		return dp[i];
+
+	return dp[i]
+		= max(maxSum(i + 1, subarr),
+				subarr[i]
+					+ maxSum(i + 2, subarr));
+}
+int Func(vector<int> arr)
+{
+	vector<int> subarr = arr;
+	subarr.pop_back();
+	dp.resize(subarr.size(), -1);
+	int max1 = maxSum(0, subarr);
+	subarr = arr;
+	subarr.erase(subarr.begin());
+	dp.clear();
+	dp.resize(subarr.size(), -1);
+	int max2 = maxSum(0, subarr);
+	cout << max(max1, max2) << endl;
+}
+int main()
+{
+    int n,a;
+    cin>>n;
+	vector<int> arr;
+	for(int i=0;i<n;i++){
+	    cin>>a;
+	    arr.push_back(a);
+	}
+	Func(arr);
+}
