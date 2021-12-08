@@ -59,23 +59,18 @@ thereis only one way to make up the amount:
 */
 #include<bits/stdc++.h>
 using namespace std;
-int ways(int arr[],int n,int t,vector<vector<int>>dp){
+vector<vector<int>> dp(1001,vector<int>(1001,-1));
+int ways(int arr[],int n,int m,int t){
     if(t==0){
         return 1;
     }
-    if(n==0){
+    if(n>=m|| t<0){
         return 0;
     }
     if(dp[n][t]!=-1){
         return dp[n][t];
     }
-    if(arr[n-1]<=t){
-        dp[n][t]=ways(arr,n,t-arr[n-1],dp)+ways(arr,n-1,t,dp);
-    }
-    else{
-        dp[n][t]=ways(arr,n-1,t,dp);
-    }
-    return dp[n][t];
+    return dp[n][t]=ways(arr,n,m,t-arr[n])+ways(arr,n+1,m,t);
     
 }
 int main(){
@@ -85,8 +80,6 @@ int main(){
     for(int i=0;i<n;i++){
         cin>>arr[i];
     }
-    vector<vector<int>> dp(n+1,vector<int>(t+1,-1));
-    
-    int m=ways(arr,n,t,dp);
+    int m=ways(arr,0,n,t);
     cout<<m;
 }
